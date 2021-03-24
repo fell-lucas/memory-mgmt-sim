@@ -44,3 +44,24 @@
   padding: 0 0.5rem;
   border: solid 1px;
 }
+
+#spawnedProcesses div {
+  display: flex;
+  flex: 1;
+  justify-content: space-around;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+#spawnedProcesses div button {
+  outline: none;
+  border: none;
+  font-size: large;
+  background-color: rgb(123, 255, 123);
+  cursor: pointer;
+  transition: 0.2s all ease-in-out;
+}
+
+#spawnedProcesses div button:hover {
+  background-color: rgb(73, 148, 73);
+}

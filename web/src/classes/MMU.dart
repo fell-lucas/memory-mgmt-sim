@@ -1,10 +1,12 @@
 import 'dart:html';
 
 import '../Globals.dart';
+import 'Interrupt.dart';
 import 'Process.dart';
 
 class MMU {
-  static var virtualMemory = <int, Process>{};
+  static var virtualMemory = <int, Process>{}; // address, process
+  static var runningProcessCount = <String, int>{}; // pid, count
 
   static void init() {
     for (var i = 0; i < SYS_MAX_PAGES; i++) {
@@ -22,18 +24,24 @@ class MMU {
     return addresses;
   }
 
-  static addProcessToAddress(Process p, int address) {
-    // if (MMU.getAvailableAddresses().length === 0) {
-    virtualMemory = virtualMemory.map((key, val) {
-      if (key == address && val == null) {
-        return MapEntry(key, p);
-      } else {
-        return MapEntry(key, val);
-      }
-    });
-    // } else {
-    //   throw new Interrupt('Page fault', 'There are no available pages in virtual memory.', p)
-    // }
+  static void addProcessToAddress(Process p, int address) {
+    if(runningProcessCount.update(
+      p.pid, 
+      (value) => ++value, 
+      ifAbsent: () => 1) <= PROC_MAX_ALLOCATED_PAGES) {
+      virtualMemory.update(address, (value) => p);
+    } else {
+      throw Interrupt('''Page fault: This process is already using the maximum 
+      number of allowed pages ($PROC_MAX_ALLOCATED_PAGES).''', p);
+    }
+
+    // virtualMemory = virtualMemory.map((key, val) {
+    //   if (key == address && val == null) {
+    //     return MapEntry(key, p);
+    //   } else {
+    //     return MapEntry(key, val);
+    //   }
+    // });
   }
 
   static report() {
@@ -42,6 +50,7 @@ class MMU {
 
   static void toHtml() {
     var virtualMemoryDiv = querySelector('#virtualMemory');
+    virtualMemoryDiv.children = [];
     MMU.virtualMemory.forEach((k, v) {
       var memoryPageDiv = DivElement();
       if (v != null) {
@@ -49,7 +58,7 @@ class MMU {
         var pAddr = ParagraphElement();
         pAddr.text = k.toString();
         var pPid = ParagraphElement();
-        pPid.text = v.pid.substring(1, 8);
+        pPid.text = v.shortPid;
         memoryPageDiv.children.addAll([pAddr, pPid]);
       } else {
         var pAddr = ParagraphElement();
