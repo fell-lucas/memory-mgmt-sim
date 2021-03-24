@@ -11,14 +11,15 @@
   padding: 5rem 0;
   flex: 1;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: center;
   align-items: center;
+  gap: 2rem;
 }
 
 .footer {
   width: 100%;
-  height: 100px;
+  height: 50px;
   border-top: 1px solid #eaeaea;
   display: flex;
   justify-content: center;
@@ -29,4 +30,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#virtualMemory {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(50px, 1fr));
+  gap: 0.2rem;
+}
+#virtualMemory div {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+  padding: 0 0.5rem;
+  border: solid 1px;
 }
