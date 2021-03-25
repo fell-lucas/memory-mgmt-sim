@@ -17,9 +17,18 @@
   <div class="container">
     <main class="main">
       <div id="interrupts"></div>
-      <div id="spawnedProcesses"></div>
+      <div class="processesOverflow">
+        <div id="spawnedProcesses"></div>
+      </div>
       <div id="virtualMemory"></div>
-      <button id="spawnProcess">Spawn Process</button>
+      <fieldset>
+        <div>
+          <label for="processSize">Process Size</label>
+          <input maxlength="5" placeholder="bytes" id="processSize" type="text">
+        </div>
+        <p>Empty for random</p>
+        <button id="spawnProcess">Spawn Process</button>
+      </fieldset>
     </main>
 
     <footer class="footer">

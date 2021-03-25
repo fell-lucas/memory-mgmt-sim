@@ -36,19 +36,36 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(50px, 1fr));
   gap: 0.2rem;
+  width: 29rem;
 }
+
 #virtualMemory div {
   display: flex;
   justify-content: space-around;
   gap: 1rem;
-  padding: 0 0.5rem;
+  padding: 0.5rem;
   border: solid 1px;
+  width: 7rem;
+}
+
+.processesOverflow {
+  width: 12rem;
+  max-height: 20rem;
+  overflow-y: auto;
+}
+
+#spawnedProcesses {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  width: 11rem;
 }
 
 #spawnedProcesses div {
   display: flex;
   flex: 1;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: center;
   gap: 0.5rem;
   padding: 0.5rem;
 }
@@ -56,12 +73,37 @@
 #spawnedProcesses div button {
   outline: none;
   border: none;
-  font-size: large;
-  background-color: rgb(123, 255, 123);
+  font-size: x-large;
+  background-color: rgb(71, 219, 71);
   cursor: pointer;
   transition: 0.2s all ease-in-out;
+  color: white;
+  font-weight: 900;
 }
 
 #spawnedProcesses div button:hover {
   background-color: rgb(73, 148, 73);
+}
+
+fieldset {
+  display: flex; 
+  flex-direction: column; 
+  flex: 1;
+  gap: 0.2rem;
+  border: none;
+}
+
+fieldset div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+fieldset p {
+  font-size: small;
+}
+
+fieldset div input {
+  width: 5rem;
 }

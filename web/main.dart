@@ -1,4 +1,5 @@
 import 'dart:html';
+import 'dart:math' as math;
 import 'src/classes/MMU.dart';
 import 'src/classes/Process.dart';
 void main() {
@@ -9,9 +10,17 @@ void main() {
     var spawnedProcessesDiv = querySelector('#spawnedProcesses');
     var processDiv = DivElement();
     var processRunBtn = ButtonElement();
-    var process = Process(8000);
+    var inputVal;
+    try {
+      var v = int.parse((querySelector('#processSize') as InputElement).value);
+      v <= 0 ? v = 1 : (v > 16000 ? v = 16000 : null); 
+      inputVal = v;
+    } catch (error) {
+      inputVal = math.Random().nextInt(15999) + 1;
+    }
+    var process = Process(inputVal);
 
-    processDiv.text = process.shortPid;
+    processDiv.text = '${process.shortPid} (${process.sizeInMemory})';
     processDiv.style.background = process.color;
     processDiv.classes.add('individualProcess');
 

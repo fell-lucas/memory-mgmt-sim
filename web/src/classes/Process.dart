@@ -7,7 +7,7 @@ import 'MMU.dart';
 
 class Process {
   String pid, color, interruptMsg, shortPid;
-  int sizeInMemory;
+  int sizeInMemory, calculatedPagesToAlloc;
   bool interrupted = false;
 
   Process(this.sizeInMemory) {
@@ -15,6 +15,9 @@ class Process {
     pid = uuid.v4();
     shortPid = pid.substring(1, 8);
     color = 'rgba(${math.Random().nextInt(255)}, ${math.Random().nextInt(255)}, ${math.Random().nextInt(255)}, 0.7)';
+    calculatedPagesToAlloc = ((SYS_PAGE_SIZE + sizeInMemory) / SYS_PAGE_SIZE).floor();
+    print(calculatedPagesToAlloc);
+    print(sizeInMemory);
   }
 
   void run() {
@@ -34,7 +37,7 @@ class Process {
     if(availableAddresses.isNotEmpty) {
       var howManyPages = math.Random().nextInt(
         (availableAddresses.length > PROC_MAX_ALLOCATED_PAGES
-          ? PROC_MAX_ALLOCATED_PAGES
+          ? calculatedPagesToAlloc
           : availableAddresses.length)) + 1;
       var chosenAddresses = List<int>.empty(growable: true);
       for (var i = 0; i < howManyPages; i++) {
@@ -43,6 +46,11 @@ class Process {
         availableAddresses.removeAt(idx);
       }
       return chosenAddresses;
+    // } 
+    // else {
+    //     throw Interrupt('''Page fault: process tried to allocate ($numPagesToAlloc) pages
+    //     but the maximum number of pages allowed to each process is ($PROC_MAX_ALLOCATED_PAGES).''', this);
+    //   }
     } else {
       throw Interrupt('Page fault: no available addresses in virtual memory.', this);
     }
