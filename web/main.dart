@@ -16,7 +16,7 @@ void main() {
       v <= 0 ? v = 1 : null; 
       inputVal = v;
     } catch (error) {
-      inputVal = math.Random().nextInt(15999) + 1;
+      inputVal = math.Random().nextInt(23999) + 1;
     }
     var process = Process(inputVal);
 

@@ -34,24 +34,12 @@ class MMU {
         runningProcessCount.update(p.pid, (value) => ++value);
       } else {
         throw Interrupt('''Page fault: This process tried to allocate more than the 
-        maximum allowed pages for each process ($PROC_MAX_ALLOCATED_PAGES).''', p);
+        global limit of allowed pages for each process ($PROC_MAX_ALLOCATED_PAGES).''', p);
       }
     } else {
       throw Interrupt('''Page fault: This process is already using the maximum 
       number of allowed pages for it (${p.calculatedPagesToAlloc}).''', p);
     }
-
-    // virtualMemory = virtualMemory.map((key, val) {
-    //   if (key == address && val == null) {
-    //     return MapEntry(key, p);
-    //   } else {
-    //     return MapEntry(key, val);
-    //   }
-    // });
-  }
-
-  static report() {
-
   }
 
   static void toHtml() {

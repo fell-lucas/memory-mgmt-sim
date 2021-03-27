@@ -12,16 +12,19 @@
   color:rgb(156, 0, 0);
 }
 
+.interruptsOverflow {
+  width: 1024px;
+  overflow-y: auto;
+}
+
 .interrupts {
-  padding: 0 1rem;
   border-radius: 0.5rem;
   /* padding: 00.5rem; */
   /* margin-top: 2rem; */
-  width: 1024px;
+  width: 1008px;
   display: flex;
   flex-direction: column;
   justify-content: end;
-  /* overflow-y: auto; */
 }
 
 .interrupts div {

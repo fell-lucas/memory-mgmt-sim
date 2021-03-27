@@ -51,7 +51,7 @@ class Process {
       throw Interrupt('Page fault: No available addresses in virtual memory.', this);
     }
   }
-// #interrupts > div:nth-child(1) > p:nth-child(2)
+  
   void interruptToHtml(Interrupt interrupt) {
     var interruptsDiv = querySelector('#interrupts');
     var processInterrupt = DivElement();
