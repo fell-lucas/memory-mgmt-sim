@@ -9,7 +9,10 @@ void main() {
   void spawnProcess(MouseEvent e) {
     var spawnedProcessesDiv = querySelector('#spawnedProcesses');
     var processDiv = DivElement();
+    var divBtns = DivElement();
     var processRunBtn = ButtonElement();
+    var processReportBtn = ButtonElement();
+
     var inputVal;
     try {
       var v = int.parse((querySelector('#processSize') as InputElement).value);
@@ -29,7 +32,15 @@ void main() {
       process.run();
       MMU.toHtml();
     });
-    processDiv.children.add(processRunBtn);
+
+    processReportBtn.text = '#';
+    processRunBtn.onClick.listen((event) {
+      MMU.report(process);
+    });
+
+    divBtns.classes.add('individualProcessDivBtn');
+    divBtns.children.addAll([processRunBtn, processReportBtn]);
+    processDiv.children.add(divBtns);
 
     spawnedProcessesDiv.append(processDiv);
     processes.add(process);

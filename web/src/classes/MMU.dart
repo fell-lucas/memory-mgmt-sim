@@ -65,4 +65,8 @@ class MMU {
     });
   }
 
+  static void report(Process process) {
+    
+  }
+
 }
