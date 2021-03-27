@@ -96,7 +96,7 @@ class MMU {
     hasPages.style.color = 'rgb(0, 0, 100)';
 
     if (process.triedToAllocate != -1) {
-      triedToAllocate.innerHtml = 'Tried to allocate ${process.triedToAllocate} pages';
+      triedToAllocate.innerHtml = 'Tried to allocate <b>${process.triedToAllocate}</b> pages';
       triedToAllocate.style.color = 'rgb(0, 0, 100)';
     } else {
       triedToAllocate.innerHtml = 'Didn\'t try to allocate yet.';
@@ -104,9 +104,9 @@ class MMU {
     }
 
     remainingSpace.innerHtml = '''<b>${MMU.usedPages}/$SYS_MAX_PAGES</b> used pages. 
-    ${SYS_MAX_PAGES - MMU.usedPages} free.''';
+    <b>${SYS_MAX_PAGES - MMU.usedPages}</b> free.''';
     if(MMU.usedPages < SYS_MAX_PAGES) {
-      remainingSpace.style.color = 'rgb(0, 0, 100)';
+      remainingSpace.style.color = 'rgb(0, 100, 0)';
     } else {
       remainingSpace.style.color = 'rgb(100, 0, 0)';
       triedToAllocate.innerHtml = 'No free space; can\'t allocate.';

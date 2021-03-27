@@ -51,7 +51,7 @@
 
 .processesOverflow {
   width: 16rem;
-  max-height: 20rem;
+  max-height: 24rem;
   overflow-y: auto;
 }
 
@@ -68,7 +68,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem;
+  padding: 0.3rem;
 }
 
 .individualProcessDivBtn button:first-child {
