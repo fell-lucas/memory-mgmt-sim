@@ -13,7 +13,7 @@ void main() {
     var inputVal;
     try {
       var v = int.parse((querySelector('#processSize') as InputElement).value);
-      v <= 0 ? v = 1 : (v > 16000 ? v = 16000 : null); 
+      v <= 0 ? v = 1 : null; 
       inputVal = v;
     } catch (error) {
       inputVal = math.Random().nextInt(15999) + 1;
@@ -25,7 +25,6 @@ void main() {
     processDiv.classes.add('individualProcess');
 
     processRunBtn.text = '>';
-    processRunBtn.attributes.addAll({'id': process.pid});
     processRunBtn.onClick.listen((event) {
       process.run();
       MMU.toHtml();

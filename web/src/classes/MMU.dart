@@ -26,14 +26,19 @@ class MMU {
 
   static void addProcessToAddress(Process p, int address) {
     if(!runningProcessCount.containsKey(p.pid)) {
-      runningProcessCount.update(p.pid, (value) => 0, ifAbsent: () => 0);
+      runningProcessCount.update(p.pid, (value) => 1, ifAbsent: () => 1);
     }
-    if(runningProcessCount[p.pid] < p.calculatedPagesToAlloc && runningProcessCount[p.pid] <= PROC_MAX_ALLOCATED_PAGES) {
-      virtualMemory.update(address, (value) => p);
-      runningProcessCount.update(p.pid, (value) => ++value);
+    if(runningProcessCount[p.pid] <= p.calculatedPagesToAlloc) {
+      if(runningProcessCount[p.pid] <= PROC_MAX_ALLOCATED_PAGES) {
+        virtualMemory.update(address, (value) => p);
+        runningProcessCount.update(p.pid, (value) => ++value);
+      } else {
+        throw Interrupt('''Page fault: This process tried to allocate more than the 
+        maximum allowed pages for each process ($PROC_MAX_ALLOCATED_PAGES).''', p);
+      }
     } else {
       throw Interrupt('''Page fault: This process is already using the maximum 
-      number of allowed pages ($PROC_MAX_ALLOCATED_PAGES).''', p);
+      number of allowed pages for it (${p.calculatedPagesToAlloc}).''', p);
     }
 
     // virtualMemory = virtualMemory.map((key, val) {

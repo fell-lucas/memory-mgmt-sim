@@ -1,0 +1,12 @@
+@media screen and (max-width: 2500px) {
+  .interrupts {
+    height: 18rem;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .interrupts {
+    height: 12rem;
+  }
+}
+
