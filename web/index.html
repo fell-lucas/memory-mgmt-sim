@@ -9,6 +9,7 @@
     <title>MemoryManagement</title>
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/home.css">
+    <link rel="stylesheet" href="styles/monitors.css">
     <link rel="stylesheet" href="styles/responsive.css">
     <link rel="icon" href="favicon.ico">
     <script defer src="main.dart.js"></script>
@@ -16,10 +17,22 @@
 
 <body>
   <div class="container">
-    <h2>Interrupt Monitor</h2>
-    <div class="interruptsOverflow">
-      <section class="interrupts" id="interrupts"></section>
-    </div>
+    <section class="monitors">
+      <div>
+        <h2 style="padding: 0.5rem; color: rgb(0, 0, 156); text-align: center;">Pager Report</h2>
+        <div id="reportProcess">
+          <!-- <p style="background-color: aqua;">8465a4d6</p> -->
+        </div>
+        <section class="report" id="report">
+        </section>
+      </div>
+      <div>
+        <h2 style="padding: 0.5rem; color: rgb(156, 0, 0);">Interrupt Monitor</h2>
+        <div class="interruptsOverflow">
+          <section class="interrupts" id="interrupts"></section>
+        </div>
+      </div>
+      </section>
     <section class="main">
       <div class="processesOverflow">
         <div id="spawnedProcesses" />

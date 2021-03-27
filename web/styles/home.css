@@ -7,55 +7,6 @@
   align-items: center;
 }
 
-.container h2 {
-  padding: 0.5rem;
-  color:rgb(156, 0, 0);
-}
-
-.interruptsOverflow {
-  width: 1024px;
-  overflow-y: auto;
-}
-
-.interrupts {
-  border-radius: 0.5rem;
-  /* padding: 00.5rem; */
-  /* margin-top: 2rem; */
-  width: 1008px;
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-}
-
-.interrupts div {
-  display: flex;
-  width: 100%;
-}
-
-.interrupts div p {
-  padding: 0.5rem;
-  text-align: center;
-}
-
-.interrupts div p:first-child{
-  border-top-left-radius: 0.5rem;
-  border-bottom-left-radius: 0.5rem;
-  font-weight: bold;
-  width: 7rem;
-}
-.interrupts div p:not(:first-child){
-  background:rgba(255, 0, 0, 0.219);
-  width: 100%;
-}
-
-.interrupts div p:last-child {
-  background:rgba(255, 0, 0, 0.438);
-  font-weight: bold;
-  border-top-right-radius: 0.5rem;
-  border-bottom-right-radius: 0.5rem;
-  width: 3rem;
-}
-
 .main {
   /* padding: 5rem 0; */
   flex: 1;

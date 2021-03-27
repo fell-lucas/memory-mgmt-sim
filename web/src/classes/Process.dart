@@ -9,7 +9,7 @@ import 'MMU.dart';
 
 class Process {
   String pid, color, interruptMsg, shortPid;
-  int sizeInMemory, calculatedPagesToAlloc;
+  int sizeInMemory, calculatedPagesToAlloc, allocatedPages, triedToAllocate;
   bool interrupted = false;
 
   Process(this.sizeInMemory) {
@@ -18,8 +18,8 @@ class Process {
     shortPid = pid.substring(0, 8);
     color = 'rgba(${math.Random().nextInt(255)}, ${math.Random().nextInt(255)}, ${math.Random().nextInt(255)}, 0.7)';
     calculatedPagesToAlloc = ((SYS_PAGE_SIZE + sizeInMemory) / SYS_PAGE_SIZE).floor();
-    print(calculatedPagesToAlloc);
-    print(sizeInMemory);
+    allocatedPages = 0;
+    triedToAllocate = -1;
   }
 
   void run() {
@@ -27,6 +27,7 @@ class Process {
       var memoryAddresses = guessMemoryAddress();
       for (var i = 0; i < memoryAddresses.length; i++) {
         MMU.addProcessToAddress(this, memoryAddresses[i]);
+        ++allocatedPages;
       }
     } catch (interrupt) {
       interruptToHtml(interrupt);
@@ -40,6 +41,7 @@ class Process {
         (availableAddresses.length > PROC_MAX_ALLOCATED_PAGES
           ? calculatedPagesToAlloc
           : availableAddresses.length)) + 1;
+      triedToAllocate = howManyPages;
       var chosenAddresses = List<int>.empty(growable: true);
       for (var i = 0; i < howManyPages; i++) {
         var idx = math.Random().nextInt(availableAddresses.length);
@@ -51,7 +53,7 @@ class Process {
       throw Interrupt('Page fault: No available addresses in virtual memory.', this);
     }
   }
-  
+
   void interruptToHtml(Interrupt interrupt) {
     var interruptsDiv = querySelector('#interrupts');
     var processInterrupt = DivElement();

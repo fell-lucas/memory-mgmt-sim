@@ -5,7 +5,6 @@ import 'src/classes/Process.dart';
 void main() {
   MMU.init();
   MMU.toHtml();
-  var processes = <Process>[];
   void spawnProcess(MouseEvent e) {
     var spawnedProcessesDiv = querySelector('#spawnedProcesses');
     var processDiv = DivElement();
@@ -30,11 +29,12 @@ void main() {
     processRunBtn.text = '>';
     processRunBtn.onClick.listen((event) {
       process.run();
+      MMU.report(process);
       MMU.toHtml();
     });
 
     processReportBtn.text = '#';
-    processRunBtn.onClick.listen((event) {
+    processReportBtn.onClick.listen((event) {
       MMU.report(process);
     });
 
@@ -43,19 +43,8 @@ void main() {
     processDiv.children.add(divBtns);
 
     spawnedProcessesDiv.append(processDiv);
-    processes.add(process);
   }
 
   querySelector('#spawnProcess').onClick.listen(spawnProcess);
-
-  try {
-    // for (var i = 0; i < 50; i++) {
-    //   var p = Process(8000);
-    //   p.run();
-    // }
-    
-  } catch (error) {
-    querySelector('.main').text = error.message;
-  }
 
 }

@@ -7,6 +7,7 @@ import 'Process.dart';
 class MMU {
   static var virtualMemory = <int, Process>{}; // address, process
   static var runningProcessCount = <String, int>{}; // pid, count
+  static int usedPages = 0;
 
   static void init() {
     for (var i = 0; i < SYS_MAX_PAGES; i++) {
@@ -32,6 +33,7 @@ class MMU {
       if(runningProcessCount[p.pid] <= PROC_MAX_ALLOCATED_PAGES) {
         virtualMemory.update(address, (value) => p);
         runningProcessCount.update(p.pid, (value) => ++value);
+        ++MMU.usedPages;
       } else {
         throw Interrupt('''Page fault: This process tried to allocate more than the 
         global limit of allowed pages for each process ($PROC_MAX_ALLOCATED_PAGES).''', p);
@@ -58,7 +60,7 @@ class MMU {
         var pAddr = ParagraphElement();
         pAddr.text = k.toString();
         var pPid = ParagraphElement();
-        pPid.text = 'LIVRE';
+        pPid.text = 'FREE';
         memoryPageDiv.children.addAll([pAddr, pPid]);
       }
       virtualMemoryDiv.append(memoryPageDiv);
@@ -66,7 +68,53 @@ class MMU {
   }
 
   static void report(Process process) {
-    
+    var reportProcess = querySelector('#reportProcess');
+    var reportProcessP = ParagraphElement();
+    var reportSection = querySelector('#report');
+
+    var isInMemory = ParagraphElement();
+    var hasPages = ParagraphElement();
+    var remainingSpace = ParagraphElement();
+    var triedToAllocate = ParagraphElement();
+
+    reportProcess.children = [];
+    reportSection.children = [];
+
+    reportProcessP.innerHtml = '<b>${process.shortPid}</b>';
+    reportProcessP.style.background = process.color;
+    reportProcess.children.addAll([reportProcessP]);
+
+    if(MMU.virtualMemory.containsValue(process)) {
+      isInMemory.innerHtml = '<b>Is</b> in memory.';
+      isInMemory.style.color = 'rgb(0, 100, 0)';
+
+    } else {
+      isInMemory.innerHtml = 'Is <b>not</b> in memory.';
+      isInMemory.style.color = 'rgb(100, 0, 0)';
+    }
+    hasPages.innerHtml = 'Has <b>${process.allocatedPages}/${process.calculatedPagesToAlloc}</b> allocated pages.';
+    hasPages.style.color = 'rgb(0, 0, 100)';
+
+    if (process.triedToAllocate != -1) {
+      triedToAllocate.innerHtml = 'Tried to allocate ${process.triedToAllocate} pages';
+      triedToAllocate.style.color = 'rgb(0, 0, 100)';
+    } else {
+      triedToAllocate.innerHtml = 'Didn\'t try to allocate yet.';
+      triedToAllocate.style.color = 'rgb(0, 0, 100)';
+    }
+
+    remainingSpace.innerHtml = '''<b>${MMU.usedPages}/$SYS_MAX_PAGES</b> used pages. 
+    ${SYS_MAX_PAGES - MMU.usedPages} free.''';
+    if(MMU.usedPages < SYS_MAX_PAGES) {
+      remainingSpace.style.color = 'rgb(0, 0, 100)';
+    } else {
+      remainingSpace.style.color = 'rgb(100, 0, 0)';
+      triedToAllocate.innerHtml = 'No free space; can\'t allocate.';
+      triedToAllocate.style.color = 'rgb(100, 0, 0)';
+    }
+
+    reportSection.style.background = 'rgba(102, 97, 97, 0.219)';
+    reportSection.children.addAll([isInMemory, hasPages, triedToAllocate, remainingSpace]);
   }
 
 }
