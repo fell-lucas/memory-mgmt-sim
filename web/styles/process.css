@@ -1,0 +1,56 @@
+.processesOverflow {
+  width: 16rem;
+  max-height: 24rem;
+  overflow-y: auto;
+}
+
+#spawnedProcesses {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  width: 15rem;
+}
+
+#spawnedProcesses > div {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem;
+}
+
+.individualProcessDivBtn button:first-child {
+  outline: none;
+  border: none;
+  font-size: x-large;
+  background-color: rgb(58, 175, 58);
+  cursor: pointer;
+  transition: 0.2s all ease-in-out;
+  color: white;
+  font-weight: 900;
+}
+
+.individualProcessDivBtn button:first-child:hover {
+  background-color: rgb(52, 105, 52);
+}
+
+.individualProcessDivBtn button:last-child {
+  outline: none;
+  border: none;
+  font-size: x-large;
+  background-color: rgba(81, 71, 219, 0.753);
+  cursor: pointer;
+  transition: 0.2s all ease-in-out;
+  color: white;
+  font-weight: 900;
+}
+
+.individualProcessDivBtn button:last-child:hover {
+  background-color: rgb(56, 55, 112);
+}
+
+.individualProcessDivBtn {
+  display: flex;
+  gap: 0.5rem;
+}

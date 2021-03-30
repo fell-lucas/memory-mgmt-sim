@@ -1,0 +1,15 @@
+#virtualMemory {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(50px, 1fr));
+  gap: 0.2rem;
+  width: 29rem;
+}
+
+#virtualMemory div {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+  padding: 0.5rem;
+  border: solid 1px;
+  width: 7rem;
+}

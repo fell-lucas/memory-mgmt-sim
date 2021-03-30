@@ -4,7 +4,6 @@ import 'dart:math' as math;
 import 'src/classes/MMU.dart';
 import 'src/classes/Process.dart';
 
-var isSimulating = false;
 void main() {
   MMU.init();
   MMU.toHtml();
@@ -22,11 +21,12 @@ void spawnProcess(MouseEvent e) {
   var inputVal;
   try {
     var v = int.parse((querySelector('#processSize') as InputElement).value);
-    v <= 0 ? v = 1 : null; 
+    if (v <= 0) v = 1;
     inputVal = v;
   } catch (error) {
     inputVal = math.Random().nextInt(23999) + 1;
   }
+  
   var process = Process(inputVal);
 
   processDiv.text = '${process.shortPid} (${process.sizeInMemory})';
@@ -56,7 +56,7 @@ void spawnProcess(MouseEvent e) {
 
 void simulate(MouseEvent event) {
   querySelector('#spawnProcess').click();
-  var timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
+  Timer.periodic(Duration(milliseconds: 100), (timer) {
     if(math.Random().nextInt(10) > 7) {
       querySelector('#spawnProcess').click();
     } else {
